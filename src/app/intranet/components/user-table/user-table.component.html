@@ -1,0 +1,47 @@
+<table mat-table
+       [dataSource]="users" multiTemplateDataRows
+       class="mat-elevation-z8">
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    </ng-container>
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button aria-label="expand row" (click)="handlerExpand(element); $event.stopPropagation()">
+          <mat-icon *ngIf="expandedUser !== element">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="expandedUser === element">keyboard_arrow_up</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+        <div class="h-full w-full"
+              [@detailExpand]="element === expandedUser ? 'expanded' : 'collapsed'">
+            <div class="p-4 border-l-4">
+              <div class="flex flex-row justify-between">
+                <h1>Publicaciones</h1>
+                <button mat-raised-button color="primary" (click)="openDialog(element)">Crear un Post</button>
+              </div>
+              <div class="flex flex-col p-2 border-b-2 last:border-b-0" *ngFor="let item of posts">
+                <h2>{{ item.title }}</h2>
+                <p>{{ item.body }}</p>
+              </div>
+              <div class="text-center" *ngIf="!posts.length">
+                <p>Aún no tienes post</p>
+              </div>
+            </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedUser === element"
+        (click)="expandedUser = expandedUser === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>

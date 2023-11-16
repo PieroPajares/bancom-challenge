@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { LandingRoutingModule } from './landing-routing.module';
 import { LandingComponent } from './landing.component';
 import { HomeComponent } from './views/home/home.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ComponentsModule } from './components/components.module';
 
 
 @NgModule({
@@ -13,6 +15,8 @@ import { HomeComponent } from './views/home/home.component';
   ],
   imports: [
     CommonModule,
+    ComponentsModule,
+    MatButtonModule,
     LandingRoutingModule
   ]
 })

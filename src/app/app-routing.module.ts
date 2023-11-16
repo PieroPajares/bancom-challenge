@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { intranetGuard } from './intranet/guards/intranet-guard.guard';
 
 const routes: Routes = [
   { path: '',
@@ -9,7 +10,12 @@ const routes: Routes = [
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule),
   },
   { path: 'intranet',
+    canActivateChild: [intranetGuard],
     loadChildren: () => import('./intranet/intranet.module').then(m => m.IntranetModule),
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
 

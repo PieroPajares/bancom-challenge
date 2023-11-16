@@ -1,0 +1,26 @@
+<form [formGroup]="loginForm" class="flex flex-col items-center">
+    <mat-form-field class="w-full">
+        <mat-label>Correo electrónico</mat-label>
+        <input type="email" matInput formControlName="email"
+                placeholder="Ex. pieropajare11@gmail.com">
+        <mat-error *ngIf="emailControl.hasError('email') && !emailControl.hasError('required')">
+            Por favor escriba un correo válido
+        </mat-error>
+        <mat-error *ngIf="emailControl.hasError('required')">
+            Correo es <strong>requerido</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+        <mat-error *ngIf="passwordControl.hasError('required')">
+            contraseña es <strong>requerido</strong>
+        </mat-error>
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="w-8/12" [disabled]="loginForm.invalid" (click)="login()">
+        Ingresar
+    </button>
+</form>

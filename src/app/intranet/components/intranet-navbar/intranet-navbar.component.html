@@ -1,0 +1,6 @@
+<div class="flex flex-row py-6 px-12 justify-end w-full">
+    <button mat-button [matMenuTriggerFor]="menu">Opciones</button>
+    <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Cerrar sesión</button>
+    </mat-menu>
+</div>
